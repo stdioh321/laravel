@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return redirect(\route("posts.index"));
 });
 
-Route::resource("/posts",\App\Http\Controllers\PostController::class);
+//Route::get("/posts/all", [\App\Http\Controllers\PostController::class, "all"]);
+Route::resource("/posts", \App\Http\Controllers\PostController::class, ["names" => "posts"]);
+
