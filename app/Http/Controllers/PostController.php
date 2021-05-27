@@ -17,7 +17,7 @@ class PostController extends Controller
 
     public function uploadImageImgbb(string $image): ?string
     {
-        $apiUrl = "https://api.imgbb.com/1/upload?key=cc26063fef5ec015c006a831e00df7de";
+        $apiUrl = "https://api.imgbb.com/1/upload?key=".env("IMGBB_KEY");
 //        $ch = curl_init();
 //        curl_setopt($ch, CURLOPT_URL, $apiUrl);
 //        curl_setopt($ch, CURLOPT_POST, true);
