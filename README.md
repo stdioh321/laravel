@@ -8,13 +8,25 @@ A simple laravel CRUD using a sqlite as a db and a service ImgBB to upload some 
 * [PHP >= 7](https://www.php.net/downloads.php) 
 * [Composer >= 2](https://getcomposer.org/download/)
 
+
+
 # Setup
+Before messing with the project, is necessary to configure the **PHP**.
+To get the path of the "php.ini":
+```
+php --ini
+```
+
+
 ```
 git clone https://github.com/stdioh321/laravel.git
 cd laravel
 composer install
 php artisan migrate:fresh --seed --env=example
 ```
+
+
+
 # Run
 ```
 php artisan serve --env=example
