@@ -9,8 +9,20 @@ A simple laravel CRUD using a sqlite as a db and a service ImgBB to upload some 
 * [Composer >= 2](https://getcomposer.org/download/)
 
 # Setup
+```
+git clone https://github.com/stdioh321/laravel.git
+cd laravel
+composer install
+php artisan migrate:fresh --seed --env=example
+```
+# Run
+```
+php artisan serve --env=example
+```
 
+Open your browser at:
 
+### **http://localhost:8000**
 
 # Run with Docker
 ```
