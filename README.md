@@ -70,7 +70,7 @@ Open your browser at:
 
 # Run with Docker
 ```
-docker run -p8080:8080 -it diaslinoh/laravel-posts:latest
+docker run -p8000:8000 -it diaslinoh/laravel-posts:latest
 
 ```
 ![Terminal](https://i.imgur.com/DphzeCV.png)
