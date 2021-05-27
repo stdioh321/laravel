@@ -1,1 +1,1 @@
-web: php artisan server --post=$PORT
+web: php artisan serve --port=$PORT
