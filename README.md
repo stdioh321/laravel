@@ -1,8 +1,10 @@
-# Testing Laravel 8 + Sqlite using imgbb
+# Testing Laravel 8 + Sqlite + Imgbb
 
-A simple laravel CRUD using a sqlite as a db and a service ImgBB to upload some images.
+A simple laravel CRUD using sqlite as the db and the service ImgBB to upload some images.
+
+
 # Demo
-**https://laravel8-posts.herokuapp.com/**
+**https://laravel8-posts.herokuapp.com**
 
 # Requirements
 * [PHP >= 7](https://www.php.net/downloads.php) 
@@ -11,18 +13,41 @@ A simple laravel CRUD using a sqlite as a db and a service ImgBB to upload some 
 
 
 # Setup
-Before messing with the project, is necessary to configure the **PHP**.
-To get the path of the "php.ini":
+<div class="text-white bg-red mb-2">
+
+Before messing with the project, it is necessary to configure the **PHP**.
+
+We accomplish this by editing the **"php.ini"** file, to find out what is your path:
+
+</div>
+
 ```
 php --ini
 ```
+![Screenshot 01](docs/screenshot_01.png)
 
+Access the php.ini and modify these following lines:
+```
+;extension=curl -----------> extension=curl
+;extension=pdo_mysql ------> extension=pdo_mysql
+;extension=pdo_slite ------> extension=pdo_slite
+
+memory_limit = 128M -------> memory_limit = -1
+upload_max_filesize = 2M --> upload_max_filesize = 100M
+post_max_size = 10M -------> post_max_size = 100M
+```
+
+<div class="text-blue">
+
+Now with the configurations ready we can start our project:
+
+</div>
 
 ```
 git clone https://github.com/stdioh321/laravel.git
-cd laravel
+cd laravel 
 composer install
-php artisan migrate:fresh --seed --env=example
+php artisan migrate:fresh --seed --env=example # (optional) [--port=8080] [--host=0.0.0.0]
 ```
 
 
@@ -31,10 +56,17 @@ php artisan migrate:fresh --seed --env=example
 ```
 php artisan serve --env=example
 ```
+<div class="text-gray">
+The parameter "--env=example" was applied in order to laravel use the ".env.example" file. 
+</div>
 
 Open your browser at:
 
 ### **http://localhost:8000**
+
+| Posts  | Edit Post |
+| ------------- | ------------- |
+| ![Screenshot 02](docs/screenshot_02.png)  | ![Screenshot 03](docs/screenshot_03.png)  |
 
 # Run with Docker
 ```
