@@ -13,15 +13,10 @@ A simple laravel CRUD using sqlite as the db and the service ImgBB to upload som
 
 
 # Setup
-<div class="text-white bg-red mb-2">
+> Note: `Before messing with the project, it is necessary to configure the **PHP**.`<br>
+`We accomplish this by editing the **"php.ini"** file, to find out what is your path:`
 
-Before messing with the project, it is necessary to configure the **PHP**.
-
-We accomplish this by editing the **"php.ini"** file, to find out what is your path:
-
-</div>
-
-```
+```bash
 php --ini
 ```
 ![Screenshot 01](docs/screenshot_01.png)
@@ -43,7 +38,7 @@ Now with the configurations ready we can start our project:
 
 </div>
 
-```
+```bash
 git clone https://github.com/stdioh321/laravel.git
 cd laravel 
 composer install
@@ -53,7 +48,7 @@ php artisan migrate:fresh --seed --env=example # (optional) [--port=8080] [--hos
 
 
 # Run
-```
+```bash
 php artisan serve --env=example
 ```
 <div class="text-gray">
@@ -69,7 +64,7 @@ Open your browser at:
 | ![Screenshot 02](docs/screenshot_02.png)  | ![Screenshot 03](docs/screenshot_03.png)  |
 
 # Run with Docker
-```
+```bash
 docker run -p8000:8000 -it diaslinoh/laravel-posts:latest
 
 ```
