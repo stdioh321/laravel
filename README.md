@@ -4,8 +4,15 @@ A simple laravel CRUD using a sqlite as a db and a service ImgBB to upload some 
 # Demo
 **https://laravel8-posts.herokuapp.com/**
 
+# Requirements
+* [PHP >= 7](https://www.php.net/downloads.php) 
+* [Composer >= 2](https://getcomposer.org/download/)
 
-# Run
+# Setup
+
+
+
+# Run with Docker
 ```
 docker run -p8080:8080 -it diaslinoh/laravel-posts:latest
 
