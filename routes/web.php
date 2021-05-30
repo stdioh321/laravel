@@ -18,5 +18,7 @@ Route::get('/', function () {
 });
 
 //Route::get("/posts/all", [\App\Http\Controllers\PostController::class, "all"]);
+Route::get("/posts/restore/{id}", [\App\Http\Controllers\PostController::class, "restore"])->name("posts.restore");
+
 Route::resource("/posts", \App\Http\Controllers\PostController::class, ["names" => "posts"]);
 

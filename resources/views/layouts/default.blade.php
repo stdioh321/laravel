@@ -9,13 +9,15 @@
         @yield("title")
     </title>
 
-    <link rel="stylesheet" href="{{asset("css/app.scss")}}">
+    <link rel="stylesheet" href="{{asset("css/app.css")}}">
+
 </head>
 <body>
 <div class="container">
     <div class="row">
+
         <div class="col-12">
-            <div class="jumbotron">
+            <div class="custom-header">
                 <h2>@yield("b-title")</h2>
             </div>
         </div>

@@ -13,8 +13,18 @@ class Post extends Model
     use SoftDeletes;
 
 
-
     protected $fillable = [
-        "title", "content","image"
+        "title", "content", "image"
     ];
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::saving(function (Post $model) {
+
+
+        });
+    }
 }
