@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
@@ -104,11 +105,10 @@ class PostController extends Controller
    */
   public function store(StoreUpdatePost $request)
   {
-    if ($request->hasFile("image") && $request->file("image")->isValid()) {
-      $f = $request->file("image");
-//      $f->storePublicly()
-      dd($f->storePubliclyAs("/user-images/", Str::uuid() . "." . $f->getClientOriginalExtension()));
-    }
+    $all = Storage::disk("s3")->allFiles();
+    Storage::disk("s3")->setVisibility("posts-images/14.gif","private");
+    return \response(Storage::disk("s3")->url("posts-images/14.gif"));
+
     $reqPost = $request->input();
 
     $validated = Validator::make($reqPost, [
@@ -124,13 +124,15 @@ class PostController extends Controller
 
     $newPost->save();
 
-    if ($request->hasFile("image")) {
+    if ($request->hasFile("image") && $request->file("image")->isValid()) {
       $img = $request->file("image");
 
 //            $name = $newPost->id . "." . $img->getClientOriginalExtension();
 //            $img->move(public_path("/images"), $name);
 
       $newPost->image = $this->uploadImageImgbb($request->file("image")->getPathname());
+//      $tmpIdImage = $img->storePubliclyAs("/posts-images", $newPost->id . "." . $img->getClientOriginalExtension());
+//      $newPost->image = Storage::disk("s3")->url($tmpIdImage);
       $newPost->save();
     }
 
@@ -194,7 +196,7 @@ class PostController extends Controller
 
     DB::beginTransaction();
 
-    if ($request->hasFile("image")) {
+    if ($request->hasFile("image") && $request->file("image")->isValid()) {
 //            $img = $request->file("image");
 //            $name = $oldPost->id . "." . $img->getClientOriginalExtension();
 //            $oldFile = "images/" . $oldPost->image;
@@ -203,7 +205,9 @@ class PostController extends Controller
 //
 //            }
 //            $img->move(public_path("/images"), $name);
-
+//      $img = $request->file("image");
+//      $tmpIdImage=$img->storePubliclyAs("/posts-images", $oldPost->id . "." . $img->getClientOriginalExtension());
+//      $updatedPost["image"] = Storage::disk("s3")->url($tmpIdImage);
       $updatedPost["image"] = $this->uploadImageImgbb($request->file("image")->getPathname());
     }
 
