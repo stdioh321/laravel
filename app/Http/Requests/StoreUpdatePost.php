@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueIgnoreCase;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -26,8 +27,12 @@ class StoreUpdatePost extends FormRequest
    */
   public function rules()
   {
+    $id = $this->segment(2);
     return [
-      'title' => 'required|string|min:3|max:160',
+      'title' => [
+        "required", "string", "min:3", "max:160",
+        new UniqueIgnoreCase("posts","id", $id),
+      ],
       'content' => ['nullable', 'string', 'min:3' . 'max:10000'],
       'image' => 'nullable|image|max:2048',
     ];

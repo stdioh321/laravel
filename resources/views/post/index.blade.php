@@ -100,11 +100,11 @@
               <div class="card">
                 <div class="card-img-top-wrapper">
                   <img
-                    src="{{$post['image'] ?? 'https://via.placeholder.com/200x100'}}"
+                    src="{{$post['image'].'?r='.Str::random() ?? 'https://via.placeholder.com/200x100'}}"
                     alt="" class="card-img-top">
                   <div class="card-img-top-actions">
                     <a href="{{route("posts.show",[$post["id"]])}}"
-                       class="btn btn-outline-secondary btn-sm"><i
+                       class="btn btn-secondary btn-sm"><i
                         class="fa fa-eye" aria-hidden="true"></i></a>
                   </div>
 

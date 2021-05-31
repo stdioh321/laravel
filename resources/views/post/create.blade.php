@@ -55,7 +55,7 @@
               <div class="col-md-12 mb-2">
                 <label for="image">Image <small class="font-weight-bold font-italic text-danger ">(Max
                     file size 2MB)</small></label>
-                <input type="file" class="form-control" id="image" name="image" accept="image/*" />
+                <input type="file" class="form-control" id="image" name="image" accept="image/*"/>
               </div>
               <div class="col-md-12">
                 <div class="image-preview">
@@ -100,8 +100,11 @@
   <script>
     let tit = document.querySelector("#title");
     if (tit) tit.focus();
-    let errorsWrapper = document.querySelector(".errors-wrapper");
-    if (errorsWrapper) errorsWrapper.scrollIntoView();
+    var errorsWrapper = document.querySelector(".errors-wrapper");
+    if (errorsWrapper)
+      setTimeout(() => {
+        errorsWrapper.scrollIntoView();
+      }, 800);
 
     let img = document.querySelector("#image");
     if (img) {

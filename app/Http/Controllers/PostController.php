@@ -78,6 +78,7 @@ class PostController extends Controller
 
 
     $q = $request->only("q")["q"] ?? null;
+
     $posts = Post::orderBy("id", "DESC")->orderBy("created_at", "DESC");
     if (!empty($q))
       $posts = $posts->where("title", "like", "%$q%")->orWhere("content", "like", "%$q%");
@@ -105,37 +106,15 @@ class PostController extends Controller
    */
   public function store(StoreUpdatePost $request)
   {
-    $all = Storage::disk("s3")->allFiles();
-    Storage::disk("s3")->setVisibility("posts-images/14.gif","private");
-    return \response(Storage::disk("s3")->url("posts-images/14.gif"));
-
-    $reqPost = $request->input();
-
-    $validated = Validator::make($reqPost, [
-      "title" => 'required|max:160|min:3|string',
-      "content" => 'nullable|max:1000|min:3|string'
-    ]);
-
-    if ($validated->fails()) return Redirect::back()->withErrors($validated);
-
-    $newPost = Post::make($reqPost);
-
+    $newPost = Post::make($request->input());
     DB::beginTransaction();
-
-    $newPost->save();
-
-    if ($request->hasFile("image") && $request->file("image")->isValid()) {
-      $img = $request->file("image");
-
-//            $name = $newPost->id . "." . $img->getClientOriginalExtension();
-//            $img->move(public_path("/images"), $name);
-
-      $newPost->image = $this->uploadImageImgbb($request->file("image")->getPathname());
+    $img = $request->file("image");
+    if ($request->hasFile("image") && $img->isValid()) {
+      $newPost->image = $this->uploadImageImgbb($img->getPathname());
 //      $tmpIdImage = $img->storePubliclyAs("/posts-images", $newPost->id . "." . $img->getClientOriginalExtension());
 //      $newPost->image = Storage::disk("s3")->url($tmpIdImage);
-      $newPost->save();
     }
-
+    $newPost->save();
     DB::commit();
 
     return redirect(route("posts.index"));
@@ -166,9 +145,6 @@ class PostController extends Controller
 
     $post = Post::where("id", "$id")->get()->first();
     if (empty($post)) return redirect()->back();
-//            return \response(null, Response::HTTP_NOT_FOUND);
-
-
     return view("post.create", ["id" => $id, "post" => $post]);
   }
 
@@ -181,39 +157,21 @@ class PostController extends Controller
    */
   public function update(StoreUpdatePost $request, $id)
   {
-
-
     $oldPost = Post::where("id", $id)->get()->first();
     if (empty($oldPost))
-      return redirect()->back()->withErrors(["msg" => "Post do not exists."]);
-    $updatedPost = $request->only(["title", "content"]);
-    $validated = Validator::make($updatedPost, [
-      "title" => 'required|max:160|min:3|string',
-      "content" => 'nullable|max:10000|min:3|string',
-    ]);
+      return redirect()->back()->withErrors(["message" => "Post do not exists."]);
 
-    if ($validated->fails()) return redirect()->back()->withErrors($validated)->withInput();
+    $updatedPost = $request->only(["title", "content"]);
+
 
     DB::beginTransaction();
 
     if ($request->hasFile("image") && $request->file("image")->isValid()) {
-//            $img = $request->file("image");
-//            $name = $oldPost->id . "." . $img->getClientOriginalExtension();
-//            $oldFile = "images/" . $oldPost->image;
-//            if (File::isFile($oldFile)) {
-//                File::delete($oldFile);
-//
-//            }
-//            $img->move(public_path("/images"), $name);
-//      $img = $request->file("image");
-//      $tmpIdImage=$img->storePubliclyAs("/posts-images", $oldPost->id . "." . $img->getClientOriginalExtension());
-//      $updatedPost["image"] = Storage::disk("s3")->url($tmpIdImage);
       $updatedPost["image"] = $this->uploadImageImgbb($request->file("image")->getPathname());
     }
-
-
     $oldPost->update($updatedPost);
     DB::commit();
+
     return redirect(route("posts.index"));
 
   }
