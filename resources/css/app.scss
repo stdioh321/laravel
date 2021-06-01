@@ -1,10 +1,13 @@
-@import "~bootstrap/scss/bootstrap";
 @import "~font-awesome/scss/font-awesome";
+@import "~bootstrap/scss/bootstrap";
+
 //@import "~@fortawesome/fontawesome-free/scss";
 
 @import "mixins";
 @import "animations";
 @import "~animate.css/animate.min.css";
+
+
 .pointer:hover {
     cursor: pointer;
 }

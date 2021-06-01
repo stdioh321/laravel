@@ -46,6 +46,7 @@
     }
   </style>
   <div class="row">
+
     @if(isset($message))
       <div class="col-12 my-1">
         <div class="alert alert-warning">{{$message}}</div>
@@ -58,8 +59,15 @@
         @endforeach
       </div>
     @endif
-    <div class="col-12 mb-4 text-right ">
-      <a href="{{route("posts.create")}}" class="btn btn-outline-primary ">Add Post</a>
+    <div class="col-12 mb-4">
+      <div class="d-flex justify-content-between">
+        <a href="{{route("posts.create")}}" class="btn btn-outline-primary ">Add Post</a>
+
+        @auth
+          <a href="{{route("auth.logout")}}" class="btn btn-outline-danger ">Logout</a>
+        @endauth
+
+      </div>
     </div>
     <div class="col-12">
       <div class="row mb-5">
@@ -68,7 +76,7 @@
             <div class="form-group row">
               <div class="col-md-10 col-12">
                 <input type="text" class="form-control" name="q" id="q" placeholder="Search..."
-                         value="{{old('q') ?? $q ?? ''}}" autocomplete="off"
+                       value="{{old('q') ?? $q ?? ''}}" autocomplete="off"
                 />
               </div>
 
@@ -78,7 +86,8 @@
                     <button class="btn btn-primary btn-block" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                   </div>
                   <div class="col-md col-6 mt-md-0 mt-1 pl-md-0">
-                    <button class="btn btn-danger btn-block" type="submit" onclick="javascript:document.querySelector('#q').value = null"><i class="fa fa-eraser" aria-hidden="true"></i></button>
+                    <button class="btn btn-danger btn-block" type="submit" onclick="javascript:document.querySelector('#q').value = null"><i
+                        class="fa fa-eraser" aria-hidden="true"></i></button>
 
                   </div>
                 </div>
