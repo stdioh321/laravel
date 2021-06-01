@@ -60,6 +60,13 @@
       </div>
     @endif
     <div class="col-12 mb-4">
+      @auth
+      <div class="d-flex justify-content-end mb-1">
+        <div class="font-weight-bold font-italic animate__animated animate__lightSpeedInRight" >
+            Hello, {{Auth::user()->name}}!
+        </div>
+      </div>
+      @endauth
       <div class="d-flex justify-content-between">
         <a href="{{route("posts.create")}}" class="btn btn-outline-primary ">Add Post</a>
 

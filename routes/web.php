@@ -29,6 +29,8 @@ Route::group(["prefix" => "auth"], function () {
   });
   Route::get("/login", [\App\Http\Controllers\AuthController::class, "loginForm"])->name("auth.login-form");
   Route::post("/login", [\App\Http\Controllers\AuthController::class, "login"])->name("auth.login");
+  Route::get("/register", [\App\Http\Controllers\AuthController::class, "registerForm"])->name("auth.register-form");
+  Route::post("/register", [\App\Http\Controllers\AuthController::class, "register"])->name("auth.register");
 });
 
 Route::group(["middleware" => "auth.custom"], function () {

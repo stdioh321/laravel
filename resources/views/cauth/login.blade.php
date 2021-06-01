@@ -1,8 +1,13 @@
 @extends("layouts/default")
-@section("title", "Posts")
-@section("b-title", "Posts")
+@section("title", "Login")
+@section("b-title", "Login")
 @section("content")
   <div class="row">
+    <div class="col-12 mb-1">
+      <div class="d-flex justify-content-end">
+        <a href="{{route("auth.register-form")}}" class="btn btn-info">Register</a>
+      </div>
+    </div>
     <div class="col-12">
       <form action="{{route("auth.login")}}" method="POST">
         @csrf
@@ -25,7 +30,7 @@
         </div>
         <div class="form-group row">
           <div class="offset-md-10 col-md offset-6 col">
-            <button class="btn btn-primary btn-block" type="submit">Submit</button>
+            <button class="btn btn-success btn-block" type="submit">Login</button>
           </div>
         </div>
       </form>
