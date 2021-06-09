@@ -61,11 +61,11 @@
     @endif
     <div class="col-12 mb-4">
       @auth
-      <div class="d-flex justify-content-end mb-1">
-        <div class="font-weight-bold font-italic animate__animated animate__lightSpeedInRight" >
-            Hello, {{Auth::user()->name}}!
+        <div class="d-flex justify-content-end mb-1">
+          <div class="font-weight-bold font-italic animate__animated animate__lightSpeedInRight">
+            <a href="{{route("user.edit")}}">Hello, {{Auth::user()->name}}!</a>
+          </div>
         </div>
-      </div>
       @endauth
       <div class="d-flex justify-content-between">
         <a href="{{route("posts.create")}}" class="btn btn-outline-primary ">Add Post</a>
@@ -116,7 +116,7 @@
               <div class="card">
                 <div class="card-img-top-wrapper">
                   <img
-                    src="{{$post['image'].'?r='.Str::random() ?? 'https://via.placeholder.com/200x100'}}"
+                    src="{{$post['image'] ?? 'https://via.placeholder.com/200x100'}}"
                     alt="" class="card-img-top">
                   <div class="card-img-top-actions">
                     <a href="{{route("posts.show",[$post["id"]])}}"

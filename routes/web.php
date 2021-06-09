@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
   return redirect(\route("posts.index"));
-});
+})->name("root");
 
 
 //Auth::routes();
@@ -26,11 +26,25 @@ Route::get('/', function () {
 Route::group(["prefix" => "auth"], function () {
   Route::group(["middleware" => "auth.custom"], function () {
     Route::get("/logout", [\App\Http\Controllers\AuthController::class, "logout"])->name("auth.logout");
+
   });
-  Route::get("/login", [\App\Http\Controllers\AuthController::class, "loginForm"])->name("auth.login-form");
-  Route::post("/login", [\App\Http\Controllers\AuthController::class, "login"])->name("auth.login");
-  Route::get("/register", [\App\Http\Controllers\AuthController::class, "registerForm"])->name("auth.register-form");
-  Route::post("/register", [\App\Http\Controllers\AuthController::class, "register"])->name("auth.register");
+//  Route::group(["middleware" => "auth.custom:not"], function () {
+    Route::get("/login", [\App\Http\Controllers\AuthController::class, "loginForm"])->name("auth.login-form");
+    Route::post("/login", [\App\Http\Controllers\AuthController::class, "login"])->name("auth.login");
+//  });
+
+
+});
+Route::group(["prefix" => "user"], function () {
+  Route::group(["middleware" => "auth.custom"], function () {
+    Route::get("/edit", [\App\Http\Controllers\UserController::class, "edit"])->name("user.edit");
+    Route::post("/update", [\App\Http\Controllers\UserController::class, "update"])->name("user.update");
+  });
+  Route::group(["middleware" => "auth.custom:not"], function () {
+    Route::get("/create", [\App\Http\Controllers\UserController::class, "create"])->name("user.create");
+    Route::post("/store", [\App\Http\Controllers\UserController::class, "store"])->name("user.store");
+  });
+
 });
 
 Route::group(["middleware" => "auth.custom"], function () {

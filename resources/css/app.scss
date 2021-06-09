@@ -17,18 +17,16 @@ html {
 }
 
 .show-on-hover {
-    transition: 0.3s opacity, 0.3s width;
-    opacity: 1;
+  transition: 0.5s max-width, 0.5s visibility;
+  display: inline-flex;
+  overflow: hidden;
+  max-width: 100vw;
 }
 
-*:not(:hover) .show-on-hover {
-    //display: none;
-    //animation: hide-me 1s 1 forwards;
-    width: 0px !important;
-    height: 0px !important;
-    display: inline-block;
-    overflow: hidden;
-    opacity: 0;
+*:not(:focus):not(:hover) > .show-on-hover {
+  max-width: 0 !important;
+  transition: 0.1s max-width, 0.5s visibility !important;
+  visibility: hidden;
 }
 
 

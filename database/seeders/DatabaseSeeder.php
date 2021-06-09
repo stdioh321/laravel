@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)-
         (new PostSeeder())->run();
+        (new UserSeeder())->run();
 
     }
 }

@@ -6,10 +6,11 @@
     <div class="col-12 mb-1">
       <div class="d-flex justify-content-end">
         <a href="{{route('auth.login-form')}}" class="btn btn-success">Back</a>
+
       </div>
     </div>
     <div class="col-12">
-      <form action="{{route("auth.register")}}" method="POST">
+      <form action="{{route("user.store")}}" method="POST">
         <div class="form-group row">
           <label for="name" class="col-md-2 col-12">Name</label>
           <div class="col-md col-12">
