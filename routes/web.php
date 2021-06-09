@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-  return redirect(\route("posts.index"));
-})->name("root");
+  return redirect(\route("auth.login-form"));
+});
 
 
 //Auth::routes();

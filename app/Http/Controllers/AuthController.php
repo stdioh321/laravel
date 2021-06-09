@@ -14,7 +14,7 @@ class AuthController extends Controller
   public function loginForm(Request $request)
   {
     if (Auth::check()) {
-      return redirect("/");
+      return redirect(route("posts.index"));
     }
 
     return view("cauth.login", [
@@ -25,7 +25,7 @@ class AuthController extends Controller
   public function login(Request $request)
   {
     if (Auth::check()) {
-      return redirect("/");
+      return redirect(route("posts.index"));
     }
     $cred = [
       "email" => $request->input("email"),
