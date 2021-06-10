@@ -17,6 +17,8 @@ class AuthController extends Controller
       return redirect(route("posts.index"));
     }
 
+
+
     return view("cauth.login", [
       "users" => User::all()
     ]);

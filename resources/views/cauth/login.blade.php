@@ -87,7 +87,6 @@
 
   </div>
   <script>
-
     const urlRedirect = "<?=urldecode( $_GET["url"] ?? "");?>";
     if (urlRedirect) {
       var inputUrl = document.createElement("input");
