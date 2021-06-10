@@ -13,6 +13,8 @@ RUN sudo composer install
 # RUN echo -n "" > /app/database/database.sqlite
 USER app
 RUN echo -n "" > database/database.sqlite
+RUN npm install laravel-mix@latest
+RUN npm clean-install
 RUN npm run dev
 RUN php artisan migrate:fresh --seed --env=example
 ENV PORT=8000
