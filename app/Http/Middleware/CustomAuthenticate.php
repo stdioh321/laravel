@@ -23,10 +23,10 @@ class CustomAuthenticate extends Middleware
   {
 
     if (in_array("not", $guards)) {
-      if (\Auth::check()) $this->onAuthFail($request, $guards);
+      if (\Auth::check()) return $this->onAuthFail($request, $guards);
     } else {
 
-      if (!\Auth::check()) $this->onAuthFail($request, $guards);
+      if (!\Auth::check()) return $this->onAuthFail($request, $guards);
 
     }
 
@@ -51,11 +51,13 @@ class CustomAuthenticate extends Middleware
    */
   public function onAuthFail(Request $request, $guards)
   {
-    throw new AuthenticationException(
-      'Unauthenticated.', $guards, $this->redirectTo($request)
-    );
-    $res = new Response();
-    $res->setStatusCode(Response::HTTP_UNAUTHORIZED);
-    return redirect("/");
+
+//    throw new AuthenticationException(
+//      'Unauthenticated.', $guards, $this->redirectTo($request)
+//    );
+//    $res = new Response();
+//    $res->setStatusCode(Response::HTTP_UNAUTHORIZED);
+//    $res->setContent("Hello");
+    return redirect(route("auth.login-form", ["url" => $request->fullUrl()]))->withErrors(["errors" => ["message" => "Unauthorized"]]);
   }
 }

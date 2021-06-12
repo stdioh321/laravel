@@ -4,24 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
 
   public function loginForm(Request $request)
   {
+    // Enable query log
+
+    \Log::info("==============================================");
+    \Log::info("SOME INFO");
+    \Log::warning("SOME WARNING");
+    \Log::error("SOME ERROR");
+    \Log::info("==============================================");
+
     if (Auth::check()) {
       return redirect(route("posts.index"));
     }
 
 
+    $users = User::all();
+    $p = $users->first()->post;
 
-    return view("cauth.login", [
-      "users" => User::all()
+    $resp = view("cauth.login", [
+      "users" => $users
     ]);
+
+    return $resp;
   }
 
   public function login(Request $request)

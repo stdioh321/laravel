@@ -40,6 +40,12 @@
             </div>
             <div class="row">
                 <div class="col-12 mb-2">
+                    <div class="font-weight-bold">User</div>
+                    <div class="">{{$post->user->name}}</div>
+                    <small class="text-muted">{{$post->user->email}}</small>
+                    <hr/>
+                </div>
+              <div class="col-12 mb-2">
                     <div class="font-weight-bold">Title</div>
                     <div class="">{{$post->title}}</div>
                     <hr/>

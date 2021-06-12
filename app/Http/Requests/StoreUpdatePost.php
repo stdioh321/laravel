@@ -34,6 +34,7 @@ class StoreUpdatePost extends FormRequest
         new UniqueIgnoreCase("posts","id", $id),
       ],
       'content' => ['nullable', 'string', 'min:3' . 'max:10000'],
+//      "id_user" => ['required', 'exists:users,id'],
       'image' => 'nullable|image|max:2048',
     ];
   }

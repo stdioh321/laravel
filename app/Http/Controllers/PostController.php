@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ServerException;
 use App\Http\Requests\StoreUpdatePost;
 use App\Models\Post;
-
+use App\Models\User;
 use Gregwar\Image\Image;
-use Illuminate\Database\Eloquent\Model;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
-use GuzzleHttp\Client;
 
 class PostController extends Controller
 {
@@ -39,7 +35,6 @@ class PostController extends Controller
   {
 
     $apiUrl = "https://api.imgbb.com/1/upload?key=" . env("IMGBB_KEY");
-    $apiUrl = "https://api.imgbb.com/1/upload?key=" . env("IMGBB_KEY");
 
 
 //        $ch = curl_init();
@@ -53,17 +48,21 @@ class PostController extends Controller
     $client = new Client();
     $resp = null;
     try {
+      $cont = fopen($image, 'r');
+
       $response = $client->request('POST', $apiUrl, [
         'multipart' => [[
           "name" => "image",
-          "contents" => fopen($image, 'r'),
+          "contents" => $cont,
           "filename" => time(),
-        ]]
+        ]],
+
       ]);
       if ($response->getStatusCode() != 200) throw new \Exception("Not ok");
       $resp = json_decode($response->getBody()->getContents())->data->url;
     } catch (\Throwable $th) {
 
+      //      throw new ServerException("Invalid Image", 422,null,"Validation Error");
     }
     return $resp;
   }
@@ -72,11 +71,10 @@ class PostController extends Controller
    * Display a listing of the resource.
    *
    * @return \Illuminate\Http\Response
+   * @throws ServerException
    */
   public function index(Request $request)
   {
-
-
     $q = $request->only("q")["q"] ?? null;
 
     $posts = Post::orderBy("id", "DESC")->orderBy("created_at", "DESC");
@@ -106,7 +104,10 @@ class PostController extends Controller
    */
   public function store(StoreUpdatePost $request)
   {
+    return $this->update($request);
+
     $newPost = Post::make($request->input());
+
     DB::beginTransaction();
     $img = $request->file("image");
     if ($request->hasFile("image") && $img->isValid()) {
@@ -130,7 +131,7 @@ class PostController extends Controller
   public function show($id = null)
   {
     $post = Post::where("id", $id)->get()->first();
-    if (isset($post)) return view("post.show", compact("post"));
+    if (isset($post)) return view("post.show", ["post" => $post]);
     return \redirect()->back()->withErrors("Post do not exists.");
   }
 
@@ -143,7 +144,8 @@ class PostController extends Controller
   public function edit($id = null)
   {
 
-    $post = Post::where("id", "$id")->get()->first();
+    $post = Post::where("id", "$id")
+      ->get()->first();
     if (empty($post)) return redirect()->back();
     return view("post.create", ["id" => $id, "post" => $post]);
   }
@@ -155,7 +157,7 @@ class PostController extends Controller
    * @param int $id
    * @return \Illuminate\Http\Response
    */
-  public function update(StoreUpdatePost $request, $id)
+  public function updatexxx(StoreUpdatePost $request, $id)
   {
     $oldPost = Post::where("id", $id)->get()->first();
     if (empty($oldPost))
@@ -174,6 +176,32 @@ class PostController extends Controller
 
     return redirect(route("posts.index"));
 
+  }
+
+  public function update(StoreUpdatePost $request, $id = null)
+  {
+
+
+    $p = Post::where("id", $id)->get()->first();
+    if (!empty($id) && empty($p)) {
+      return redirect()->back()->withErrors(["message" => "Post do not exists."]);
+    }
+    $newPost = $request->only(["title", "content"]);
+    if ($request->hasFile("image") && $request->file("image")) {
+      $newPost["image"] = $this->uploadImageImgbb($request->file("image")->getPathname());
+    }
+    DB::beginTransaction();
+    if($p == null){
+      $p = Post::make($newPost);
+      $p->id_user = \Auth::user()->id;
+      $p->save();
+    }else
+      $p->update($newPost);
+
+
+    DB::commit();
+
+    return redirect(route("posts.index"));
   }
 
   public function destroy($id = null)

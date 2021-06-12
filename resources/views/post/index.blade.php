@@ -5,6 +5,26 @@
   <style>
     .card-img-top-wrapper {
       position: relative;
+      max-height: 300px;
+      text-align: center;
+    }
+
+    .card-img-top-wrapper .is-mine {
+      position: absolute;
+      top: -2.5px;
+      left: -2.5px;
+      width: 7px;
+      height: 7px;
+      background-color: green;
+      border-radius: 100%;
+    }
+
+    .card-img-top-wrapper > .card-img-top {
+      max-height: inherit;
+      /*border: solid red 1px;*/
+      max-width: 100% !important;
+      width: auto !important;
+
     }
 
     .card-img-top-wrapper > .card-img-top-actions {
@@ -123,11 +143,13 @@
                        class="btn btn-secondary btn-sm"><i
                         class="fa fa-eye" aria-hidden="true"></i></a>
                   </div>
-
+                  @if($post->id_user == Auth::user()->id)
+                    <div class="is-mine animate__animated animate__heartBeat" style="animation-iteration-count: infinite"></div>
+                  @endif
                 </div>
                 <div class="card-body">
                   <div class="card-title">{{$post["id"] ?? ""}}) {{$post["title"] ?? ""}}</div>
-                  <small class="card-text">{{$post["content"] ?? ""}}</small>
+                  <div style="max-height: 4.5em;" class="card-text overflow-hidden text-truncate ">{{$post["content"] ?? ""}}</div>
 
                 </div>
               </div>

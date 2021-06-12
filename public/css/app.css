@@ -13055,8 +13055,9 @@ h3 {
   cursor: pointer;
 }
 
-html {
+html, body {
   scroll-behavior: smooth;
+  min-height: 100vh;
 }
 
 .show-on-hover {

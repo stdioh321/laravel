@@ -38,6 +38,14 @@
           <input type="text" name="_method" value="PUT" hidden>
         @endif
 
+{{--        <div class="form-group">--}}
+{{--          <label for="id_user">User *</label>--}}
+{{--          <select name="id_user" id="id_user" class="form-control">--}}
+{{--            @foreach($users as $user)--}}
+{{--              <option value="{{$user->id}}" >{{$user->name}}</option>--}}
+{{--            @endforeach--}}
+{{--          </select>--}}
+{{--        </div>--}}
         <div class="form-group">
           <label for="title">Title *</label>
           <input type="text" class="form-control" id="title" name="title" placeholder="Title"

@@ -2,6 +2,7 @@
 @section("title", "Login")
 @section("b-title", "Login")
 @section("content")
+
   <div class="row">
 
     <div class="col-12 mb-1">
@@ -52,9 +53,10 @@
         <table class="table table-sm table-sm-responsive table-striped ">
           <thead class="">
           <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Total Posts</th>
           </tr>
           </thead>
           <tbody>
@@ -65,6 +67,10 @@
               <td>{{$user["id"]}}</td>
               <td>{{$user["name"]}}</td>
               <td>{{$user["email"]}}</td>
+              <td>
+                {{$user->post->count()}}
+
+              </td>
             </tr>
           @endforeach
           </tbody>
@@ -87,7 +93,7 @@
 
   </div>
   <script>
-    const urlRedirect = "<?=urldecode( $_GET["url"] ?? "");?>";
+    const urlRedirect = "<?=urldecode($_GET["url"] ?? "");?>";
     if (urlRedirect) {
       var inputUrl = document.createElement("input");
       inputUrl.hidden = true;
@@ -122,4 +128,5 @@
 
       });
   </script>
+
 @endsection

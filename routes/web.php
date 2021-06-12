@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
+//Route::any("/post-custom/{id?}", [\App\Http\Controllers\PostController::class, "customUpdate"]);
 Route::group(["prefix" => "auth"], function () {
   Route::group(["middleware" => "auth.custom"], function () {
     Route::get("/logout", [\App\Http\Controllers\AuthController::class, "logout"])->name("auth.logout");

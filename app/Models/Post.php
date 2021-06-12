@@ -9,22 +9,27 @@ use Illuminate\Notifications\Notifiable;
 
 class Post extends Model
 {
-    use HasFactory, Notifiable;
-    use SoftDeletes;
+  use HasFactory, Notifiable;
+  use SoftDeletes;
 
 
-    protected $fillable = [
-        "title", "content", "image"
-    ];
+  protected $fillable = [
+    "title", "content", "image", "id_user"
+  ];
 
 
-    protected static function boot()
-    {
-        parent::boot();
+  public function user()
+  {
+    return $this->belongsTo(User::class, "id_user", "id");
+  }
 
-        self::saving(function (Post $model) {
+  protected static function boot()
+  {
+    parent::boot();
+
+    self::saving(function (Post $model) {
 
 
-        });
-    }
+    });
+  }
 }
